@@ -46,10 +46,13 @@ class MyApp extends StatelessWidget {
                 '/category': (context) => TopicCategoryScreen(),
                 '/category/select_category': (context) => TopicCategoryScreen(),
                 '/category/instructions': (context) {
-                  return SelectTopicCategoryScreen(ModalRoute.of(context)!.settings.arguments as List<dynamic>);
+                  return SelectTopicCategoryScreen(ModalRoute.of(context)!
+                      .settings
+                      .arguments as List<dynamic>);
                 },
                 '/category/instructions/id': (context) {
-                  return InstructionScreen(ModalRoute.of(context)!.settings.arguments as int);
+                  return InstructionScreen(
+                      ModalRoute.of(context)!.settings.arguments as int);
                 }
               },
             ),

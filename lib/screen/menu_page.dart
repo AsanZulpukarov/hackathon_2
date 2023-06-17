@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodeks/screen/doc/do_doc.dart';
+import 'package:kodeks/screen/instruction/topic_category_screen.dart';
 import 'package:kodeks/screen/profile_screen/user_profile_screen.dart';
 import 'package:kodeks/screen/questions.dart';
 
@@ -21,7 +22,12 @@ class _MenuPageState extends State<MenuPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    screens = [ChatScreenGPT(), SelectDoc(), UserProfileScreen()];
+    screens = [
+      ChatScreenGPT(),
+      SelectDoc(),
+      TopicCategoryScreen(),
+      UserProfileScreen()
+    ];
   }
 
   @override
@@ -71,6 +77,14 @@ class _MenuPageState extends State<MenuPage> {
                       Icons.edit_document,
                     ),
                     label: 'Документы'),
+                BottomNavigationBarItem(
+
+                    // icon: Icon(
+                    // Icons.play_arrow_outlined,
+                    icon: Icon(
+                      Icons.menu,
+                    ),
+                    label: 'Категории'),
                 BottomNavigationBarItem(
                     icon: Icon(
                       Icons.account_box,
