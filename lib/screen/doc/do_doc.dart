@@ -6,9 +6,16 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:url_launcher/url_launcher.dart';
 
-class Doc extends StatelessWidget {
-  // ...
+class Doc extends StatefulWidget {
+  final nameDoc;
+  const Doc({Key? key, required this.nameDoc}) : super(key: key);
+  @override
+  State<Doc> createState() => _DocState();
+}
 
+class _DocState extends State<Doc> {
+  // ...
+  TextEditingController name = TextEditingController();
   Future<void> downloadDocument() async {
     final pdf = pw.Document();
 
@@ -32,36 +39,50 @@ class Doc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Statements PDF',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.nameDoc),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Statements PDF'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: generateDocument,
-                child: Text('Создать документ PDF'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 19),
+              height: 45,
+              decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.blue),
+                borderRadius: BorderRadius.circular(10),
               ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: downloadDocument,
-                child: Text('Скачать документ PDF'),
+              child: TextField(
+                controller: name,
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Название объявления',
+                    hintStyle: TextStyle(
+                      color: Color(0xFFA6A6A6),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    )),
               ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () => openURL(
-                    'https://xn----8sbebn0dapeq.xn--p1acf/assets/files/pdffajl.pdf'),
-                child: Text('Открыть URL'),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: generateDocument,
+              child: Text('Создать документ PDF'),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: downloadDocument,
+              child: Text('Скачать документ PDF'),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () => openURL(
+                  'https://xn----8sbebn0dapeq.xn--p1acf/assets/files/pdffajl.pdf'),
+              child: Text('Открыть URL'),
+            ),
+          ],
         ),
       ),
     );

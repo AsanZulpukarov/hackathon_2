@@ -3,19 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kodeks/service/api_service.dart';
 
 import '../widgets/messageContainer.dart';
+import 'chat/chat_message.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+class ChatScreenGPT extends StatefulWidget {
+  const ChatScreenGPT({Key? key}) : super(key: key);
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChatScreenGPT> createState() => _ChatScreenGPTState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenGPTState extends State<ChatScreenGPT> {
   TextEditingController questionController = TextEditingController();
   bool load = false;
-  List<String> answers = [];
-  List<String> questions = [];
+  List<ChatMessage> answers = [];
+  List<ChatMessage> questions = [];
 
   @override
   void dispose() {
@@ -38,27 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   for (var i = 0; i < answers.length; i++)
                     Column(
                       children: [
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: MessageContainer(
-                            backgroundColor: Theme.of(context).primaryColor,
-                            message: questions[i],
-                            textColor: Colors.white,
-                            padding: EdgeInsets.all(6),
-                            borderRadius: 10.r,
-                          ),
-                        ),
+                        questions[i],
                         SizedBox(height: 15.h),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: MessageContainer(
-                            backgroundColor: Colors.white,
-                            message: answers[i],
-                            textColor: Theme.of(context).primaryColor,
-                            padding: EdgeInsets.all(6),
-                            borderRadius: 10,
-                          ),
-                        ),
+                        answers[i],
                         SizedBox(height: 10.h),
                       ],
                     ),
@@ -70,13 +53,21 @@ class _ChatScreenState extends State<ChatScreen> {
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Container(
-                  padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                  padding: EdgeInsets.all(10),
                   height: 80.h,
                   width: double.infinity,
                   color: Colors.white,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      /*IconButton(
+                        icon: Icon(Icons.category),
+                        onPressed: () {
+                          // Действие при нажатии на кнопку выбора категории
+                          // Можете открыть диалоговое окно с выбором категории или
+                          // перейти на отдельную страницу для выбора категории.
+                        },
+                      ),*/
                       Expanded(
                         child: TextField(
                           controller: questionController,
@@ -91,10 +82,21 @@ class _ChatScreenState extends State<ChatScreen> {
                             load = !load;
                           });
 
-                          questions.add(questionController.text);
+                          questions.add(ChatMessage(
+                            text: questionController.text,
+                            isUser: true,
+                          ));
+/*
+                          messages.add(ChatMessage(
+                            text: botResponse,
+                            isUser: false,
+                          ));*/
                           var ans = await ApiService()
                               .postSendQuestion(questionController.text);
-                          answers.add(ans);
+                          answers.add(ChatMessage(
+                            text: ans,
+                            isUser: false,
+                          ));
                           // await ApiService().getDoc();
                           setState(() {
                             load = !load;
