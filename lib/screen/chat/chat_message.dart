@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:kodeks/colors.dart';
 
 class ChatMessage extends StatelessWidget {
   final String text;
   final bool isUser;
 
   ChatMessage({required this.text, required this.isUser});
+
+  var styleTextCircular = TextStyle(color: Colors.white,fontSize: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class ChatMessage extends StatelessWidget {
                 )
               : Container(
                   margin: EdgeInsets.only(right: 16.0),
-                  child: CircleAvatar(child: Text('B')),
+                  child: CircleAvatar(child: Text('B',style: styleTextCircular,),backgroundColor: kDarkCardC,),
                 ),
           Expanded(
             flex: 5,
@@ -32,12 +35,12 @@ class ChatMessage extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
                   decoration: BoxDecoration(
-                    color: isUser ? Colors.blue : Colors.grey[200],
+                    color: isUser ? Theme.of(context).primaryColor : Colors.grey[200],
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Text(
                     text,
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(fontSize: 16.0,color: isUser ? Colors.white : kDarkCardC),
                   ),
                 ),
               ],
@@ -46,7 +49,7 @@ class ChatMessage extends StatelessWidget {
           isUser
               ? Container(
                   margin: EdgeInsets.only(left: 16.0),
-                  child: CircleAvatar(child: Text('U')),
+                  child: CircleAvatar(child: Text('U',style: styleTextCircular,),backgroundColor: Theme.of(context).primaryColor,),
                 )
               : Expanded(
                   child: Container(),

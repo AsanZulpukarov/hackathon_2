@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kodeks/colors.dart';
+import 'package:kodeks/screen/menu_page.dart';
 import 'package:kodeks/service/api_service.dart';
 import 'package:kodeks/widgets/button.dart';
 import 'package:kodeks/widgets/text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -29,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: LayoutBuilder(
@@ -125,13 +128,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                       constraints: constraints,
                                       btnColor: Theme.of(context).primaryColor,
                                       btnText: 'Войти',
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          print(ApiService().postSingIn(
+                                          String? answer = await ApiService().postSingIn(
                                               innController.text,
-                                              passwordController.text));
-                                          Navigator.pushNamed(
-                                              context, "/user_profile");
+                                              passwordController.text);
+                                          if(answer.isNotEmpty){
+                                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                                            Map<String, dynamic> userData = jsonDecode(answer);
+
+                                            prefs.setString("roleKey", userData["role"]);
+                                            prefs.setInt("idKey", userData["id"]);
+                                            prefs.setString("nameKey", userData["name"]);
+                                            Navigator.pushAndRemoveUntil(
+                                                context, MaterialPageRoute(builder: (context) =>
+                                                MenuPage(userData["role"])),(Route<dynamic> route) => false);
+                                          }
+
                                         }
                                       },
                                     ),
@@ -192,4 +205,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kodeks/screen/doc/do_doc.dart';
 import 'package:kodeks/screen/instruction/topic_category_screen.dart';
+import 'package:kodeks/screen/profile_screen/lawyer_profile_screen.dart';
 import 'package:kodeks/screen/profile_screen/user_profile_screen.dart';
 import 'package:kodeks/screen/questions.dart';
 
@@ -8,7 +8,9 @@ import '../colors.dart';
 import 'doc/select_document/select_doc.dart';
 
 class MenuPage extends StatefulWidget {
-  const MenuPage({Key? key}) : super(key: key);
+  String role;
+
+  MenuPage(this.role,{Key? key}) : super(key: key);
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -26,7 +28,7 @@ class _MenuPageState extends State<MenuPage> {
       ChatScreenGPT(),
       SelectDoc(),
       TopicCategoryScreen(),
-      UserProfileScreen()
+      widget.role == "ROLE_LAWYER" ?  LawyerProfileScreen() : UserProfileScreen() ,
     ];
   }
 

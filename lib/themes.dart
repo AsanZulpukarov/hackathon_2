@@ -52,10 +52,8 @@ class KodeksThemes {
   );
 
   static final darkTheme = ThemeData(
+      indicatorColor: kGreenColor,
       canvasColor: kDarkCardC,
-      datePickerTheme: const DatePickerThemeData(
-          todayBorder: BorderSide(color: kDarkGreenColor),
-          rangePickerSurfaceTintColor: kDarkGreenColor),
       fontFamily: 'Outfit',
       scaffoldBackgroundColor: kDarkScaffoldC,
       appBarTheme: const AppBarTheme(
