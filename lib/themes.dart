@@ -23,6 +23,9 @@ class ThemeSwitch extends ChangeNotifier {
 
 class KodeksThemes {
   static final lightTheme = ThemeData(
+    appBarTheme: AppBarTheme(
+      color: kGreenColor
+    ),
     canvasColor: kCardColor,
     textTheme: const TextTheme(
         bodyLarge: TextStyle(color: kFontBlackC),
