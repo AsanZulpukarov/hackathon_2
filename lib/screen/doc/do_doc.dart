@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:kodeks/colors.dart';
 import 'package:kodeks/screen/doc/statement.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -43,47 +44,44 @@ class _DocState extends State<Doc> {
       appBar: AppBar(
         title: Text(widget.nameDoc),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 19),
-              height: 45,
-              decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.blue),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextField(
-                controller: name,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Название объявления',
-                    hintStyle: TextStyle(
-                      color: Color(0xFFA6A6A6),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    )),
-              ),
+      body: ListView(
+        padding: EdgeInsets.all(20),
+        children: [
+          Container(
+            height: 45,
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: kGreenColor),
+              borderRadius: BorderRadius.circular(10),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: generateDocument,
-              child: Text('Создать документ PDF'),
+            child: TextField(
+              controller: name,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'ФИО',
+                  hintStyle: TextStyle(
+                    color: Color(0xFFA6A6A6),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  )),
             ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: downloadDocument,
-              child: Text('Скачать документ PDF'),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () => openURL(
-                  'https://xn----8sbebn0dapeq.xn--p1acf/assets/files/pdffajl.pdf'),
-              child: Text('Открыть URL'),
-            ),
-          ],
-        ),
+          ),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: generateDocument,
+            child: Text('Создать документ PDF'),
+          ),
+          SizedBox(height: 16.0),
+          ElevatedButton(
+            onPressed: downloadDocument,
+            child: Text('Скачать документ PDF'),
+          ),
+          SizedBox(height: 16.0),
+          ElevatedButton(
+            onPressed: () => openURL(
+                'https://xn----8sbebn0dapeq.xn--p1acf/assets/files/pdffajl.pdf'),
+            child: Text('Открыть URL'),
+          ),
+        ],
       ),
     );
   }
