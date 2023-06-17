@@ -11,7 +11,7 @@ import 'doc/select_document/select_doc.dart';
 class MenuPage extends StatefulWidget {
   String role;
 
-  MenuPage(this.role,{Key? key}) : super(key: key);
+  MenuPage(this.role, {Key? key}) : super(key: key);
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -30,7 +30,9 @@ class _MenuPageState extends State<MenuPage> {
       SelectDoc(),
       TopicCategoryScreen(),
       QuestionsPage(),
-      widget.role == "ROLE_LAWYER" ?  LawyerProfileScreen() : UserProfileScreen() ,
+      widget.role == "ROLE_LAWYER"
+          ? LawyerProfileScreen()
+          : UserProfileScreen(),
     ];
   }
 
