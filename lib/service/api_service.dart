@@ -393,4 +393,33 @@ class ApiService {
       return '';
     }
   }
+
+  Future<bool> postNewComment(String questionId,int userId,String comment) async {
+    Map<String, dynamic> json = {
+      "question_id":int.parse(questionId),
+      "user_id":userId,
+      "comment" : comment
+    };
+
+    var uri = Uri(
+      scheme: 'http',
+      host: ip,
+      port: port,
+      path: 'api/question/comment/create',
+    );
+    print(uri);
+    var response = await client.post(uri,
+        body: jsonEncode(json),
+        headers: {"Content-Type": "application/json", "Accept": "*/*"});
+    print(response.statusCode);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print(response.statusCode);
+      print(response.body);
+      return true;
+    } else {
+      print('error not found');
+      print(response.body);
+      return false;
+    }
+  }
 }
