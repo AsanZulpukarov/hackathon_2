@@ -23,6 +23,9 @@ class ThemeSwitch extends ChangeNotifier {
 
 class KodeksThemes {
   static final lightTheme = ThemeData(
+    appBarTheme: AppBarTheme(
+      color: kGreenColor
+    ),
     canvasColor: kCardColor,
     textTheme: const TextTheme(
         bodyLarge: TextStyle(color: kFontBlackC),
@@ -47,27 +50,6 @@ class KodeksThemes {
     ),
   );
 
-  static final darkTheme = ThemeData(
-      canvasColor: kDarkCardC,
-      datePickerTheme: const DatePickerThemeData(
-          todayBorder: BorderSide(color: kDarkGreenColor),
-          rangePickerSurfaceTintColor: kDarkGreenColor),
-      fontFamily: 'Outfit',
-      scaffoldBackgroundColor: kDarkScaffoldC,
-      colorScheme: const ColorScheme.dark(),
-      cardColor: kDarkCardC,
-      primaryColor: kDarkGreenColor,
-      inputDecorationTheme: InputDecorationTheme(
-          hoverColor: kDarkGreenColor,
-          focusColor: kDarkGreenColor,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadius.circular(12),
-          )));
 
   static bool isDarkMode(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
