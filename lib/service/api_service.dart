@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ApiService {
   var client = http.Client();
@@ -18,27 +20,6 @@ class ApiService {
     );
     var response = await client.post(uri,
         body: jsonEncode(json),
-        headers: {"Content-Type": "application/json", "Accept": "*/*"});
-    print(response.statusCode);
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      print(response.statusCode);
-      print(response.body);
-      return response.body;
-    } else {
-      print('error not found');
-      print(response.body);
-      return '';
-    }
-  }
-
-  Future<dynamic> getDoc() async {
-    var uri = Uri(
-      scheme: 'http',
-      host: '192.168.43.93',
-      port: 8080,
-      path: 'api/file/download/hello',
-    );
-    var response = await client.get(uri,
         headers: {"Content-Type": "application/json", "Accept": "*/*"});
     print(response.statusCode);
     if (response.statusCode == 201 || response.statusCode == 200) {
@@ -133,6 +114,32 @@ class ApiService {
     }
   }
 
+  Future<dynamic> getInfoUser(int id) async {
+    var uri = Uri(
+      scheme: 'http',
+      host: ip,
+      port: port,
+      path: 'api/get/user/$id',
+    );
+    print(uri);
+    var response = await client.get(
+      uri,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        HttpHeaders.acceptCharsetHeader: 'utf-8',
+      },
+    );
+    print(response.statusCode);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print(response.body);
+      return response.body;
+    } else {
+      print('error not found');
+      return '';
+    }
+  }
+
   Future<bool> postLikeQuestion(
       {required String questionId, required String userId}) async {
     var json = {"question_id": questionId, "user_id": userId};
@@ -167,8 +174,14 @@ class ApiService {
       path: 'api/category/get/all',
     );
     print(uri);
-    var response = await client.get(uri,
-        headers: {"Content-Type": "application/json", "Accept": "*/*"});
+    var response = await client.get(
+      uri,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        HttpHeaders.acceptCharsetHeader: 'utf-8',
+      },
+    );
     print(response.statusCode);
     if (response.statusCode == 201 || response.statusCode == 200) {
       print(response.statusCode);
@@ -180,6 +193,7 @@ class ApiService {
       return '';
     }
   }
+
 
   Future<dynamic> getQuestionsById(String id) async {
     var uri = Uri(
@@ -302,8 +316,14 @@ class ApiService {
       path: 'api/instruction/get/by/category/${id}',
     );
     print(uri);
-    var response = await client.get(uri,
-        headers: {"Content-Type": "application/json", "Accept": "*/*"});
+    var response = await client.get(
+      uri,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        HttpHeaders.acceptCharsetHeader: 'utf-8',
+      },
+    );
     print(response.statusCode);
     if (response.statusCode == 201 || response.statusCode == 200) {
       print(response.statusCode);
@@ -316,6 +336,42 @@ class ApiService {
     }
   }
 
+  Future<bool> postCheckCertificate(XFile file, int id) async {
+    var uri = Uri(
+      scheme: 'http',
+      host: ip,
+      port: port,
+      path: 'api/lawyer/create/$id',
+    );
+    print(uri);
+    var request = http.MultipartRequest('POST', uri);
+
+//for image and videos and files
+
+// request.files.add(await http.MultipartFile.fromPath("images", path));
+    final fileBytes = await file.readAsBytes();
+    final httpImage = http.MultipartFile.fromBytes(
+        'certificate', fileBytes.toList(),
+        contentType: MediaType('image', 'jpeg'), filename: file.name);
+//for completeing the request
+    request.files.add(httpImage);
+    var response = await request.send();
+
+//for getting and decoding the response into json format
+    var responsed = await http.Response.fromStream(response);
+// final responseData = json.decode();
+
+    if (response.statusCode == 200) {
+      print("SUCCESS photoprofile add");
+      print(responsed.body);
+      return true;
+    } else {
+      print(response.statusCode);
+      print(responsed.body);
+      print("ERROR photo profile");
+      return false;
+    }
+  }
   Future<dynamic> getInstructionDocument(int id) async {
     var uri = Uri(
       scheme: 'http',

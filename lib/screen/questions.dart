@@ -70,8 +70,11 @@ class _ChatScreenGPTState extends State<ChatScreenGPT> {
                       ),*/
                       Expanded(
                         child: TextField(
+                          maxLines: null,
+                          expands: true,
                           controller: questionController,
                           decoration: InputDecoration(
+                            isDense: true,
                               hintText: "Пишите свой вопрос...",
                               border: InputBorder.none),
                         ),
