@@ -15,7 +15,7 @@ class SubSelectDoc extends StatefulWidget {
 
 class _SubSelectDocState extends State<SubSelectDoc> {
   List<String> CategoryName = [
-    'Заявление об повышении',
+    'Заявление о принятии на работу',
     'Заявление об увольнении',
   ];
 
