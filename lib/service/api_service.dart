@@ -75,7 +75,7 @@ class ApiService {
     }
   }
 
-  Future<String> postSendQuestion(String question) async {
+  Future<dynamic> postSendQuestion(String question) async {
     Map<String, dynamic> jsonQues = {
       "message": question,
     };
@@ -91,14 +91,9 @@ class ApiService {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.acceptCharsetHeader: 'utf-8',
     });
-    print(response.statusCode);
     if (response.statusCode == 201 || response.statusCode == 200) {
-      print(response.statusCode);
-      print(response.body);
       return response.body;
     } else {
-      print('error not found');
-      print(response.body);
       return '';
     }
   }

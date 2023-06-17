@@ -26,7 +26,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Чат"),
+      ),
       body: load
           ? Center(child: CircularProgressIndicator())
           : Stack(children: [
@@ -39,29 +41,29 @@ class _ChatScreenState extends State<ChatScreen> {
                         Align(
                           alignment: Alignment.topRight,
                           child: MessageContainer(
-                            backgroundColor: Colors.grey,
+                            backgroundColor: Theme.of(context).primaryColor,
                             message: questions[i],
                             textColor: Colors.white,
                             padding: EdgeInsets.all(6),
-                            borderRadius: 10,
+                            borderRadius: 10.r,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 15.h),
                         Align(
                           alignment: Alignment.topLeft,
                           child: MessageContainer(
-                            backgroundColor: Colors.grey,
+                            backgroundColor: Colors.white,
                             message: answers[i],
-                            textColor: Colors.white,
+                            textColor: Theme.of(context).primaryColor,
                             padding: EdgeInsets.all(6),
                             borderRadius: 10,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 10.h),
                       ],
                     ),
                   SizedBox(
-                    height: 80,
+                    height: 80.h,
                   )
                 ],
               ),
@@ -69,17 +71,17 @@ class _ChatScreenState extends State<ChatScreen> {
                 alignment: Alignment.bottomLeft,
                 child: Container(
                   padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
-                  height: 60.h,
+                  height: 80.h,
                   width: double.infinity,
                   color: Colors.white,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Expanded(
                         child: TextField(
                           controller: questionController,
                           decoration: InputDecoration(
-                              hintText: "Write message...",
-                              hintStyle: TextStyle(color: Colors.black54),
+                              hintText: "Пишите свой вопрос...",
                               border: InputBorder.none),
                         ),
                       ),

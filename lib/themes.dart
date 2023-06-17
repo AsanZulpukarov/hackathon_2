@@ -29,6 +29,10 @@ class KodeksThemes {
         bodyMedium: TextStyle(color: kFontBlackC),
         bodySmall: TextStyle(color: kFontBlackC)),
     fontFamily: 'Outfit',
+    appBarTheme: const AppBarTheme(
+      backgroundColor: kGreenColor,
+      centerTitle: true,
+    ),
     scaffoldBackgroundColor: Colors.white,
     colorScheme: const ColorScheme.light(),
     primaryColor: kGreenColor,
@@ -54,6 +58,10 @@ class KodeksThemes {
           rangePickerSurfaceTintColor: kDarkGreenColor),
       fontFamily: 'Outfit',
       scaffoldBackgroundColor: kDarkScaffoldC,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: kDarkGreenColor,
+        centerTitle: true,
+      ),
       colorScheme: const ColorScheme.dark(),
       cardColor: kDarkCardC,
       primaryColor: kDarkGreenColor,
