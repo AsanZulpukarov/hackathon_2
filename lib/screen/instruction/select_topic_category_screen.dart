@@ -5,7 +5,7 @@ import 'package:kodeks/model/instruction_model.dart';
 
 class SelectTopicCategoryScreen extends StatefulWidget {
   List<dynamic> idAndName;
-  SelectTopicCategoryScreen(this.idAndName,{Key? key}) : super(key: key);
+  SelectTopicCategoryScreen(this.idAndName, {Key? key}) : super(key: key);
 
   @override
   State<SelectTopicCategoryScreen> createState() =>
@@ -19,7 +19,8 @@ class _SelectTopicCategoryScreenState extends State<SelectTopicCategoryScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    futureInstructionModel = fetchInstructionByIdCategory(widget.idAndName.first);
+    futureInstructionModel =
+        fetchInstructionByIdCategory(widget.idAndName.first);
   }
 
   @override
@@ -53,9 +54,12 @@ class _SelectTopicCategoryScreenState extends State<SelectTopicCategoryScreen> {
                         children: [
                           Text(
                             snapshot.data!.data!.elementAt(index).title ?? "",
-                            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: 5.h,),
+                          SizedBox(
+                            height: 5.h,
+                          ),
                           Text(
                             snapshot.data!.data!.elementAt(index).instruction ??
                                 "",
@@ -65,16 +69,24 @@ class _SelectTopicCategoryScreenState extends State<SelectTopicCategoryScreen> {
                                 fontStyle: FontStyle.italic,
                                 overflow: TextOverflow.ellipsis),
                           ),
-                          SizedBox(height: 5.h,),
+                          SizedBox(
+                            height: 5.h,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Icon(Icons.calendar_month,color:Theme.of(context).primaryColor),
-                              Text(snapshot.data!.data!.elementAt(index).updatedAt ?? snapshot.data!.data!.elementAt(index).createdAt ?? ""
-                                  "Даты нет"),
+                              Icon(Icons.calendar_month,
+                                  color: Theme.of(context).primaryColor),
+                              Text(snapshot.data!.data!
+                                      .elementAt(index)
+                                      .updatedAt ??
+                                  snapshot.data!.data!
+                                      .elementAt(index)
+                                      .createdAt ??
+                                  ""
+                                      "Даты нет"),
                             ],
                           ),
-
                         ],
                       ),
                     ),

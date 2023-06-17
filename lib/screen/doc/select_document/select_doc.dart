@@ -23,7 +23,7 @@ class _SelectDocState extends State<SelectDoc> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Doc'),
+        title: Text('Документы'),
       ),
       body: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 14, vertical: 15),
@@ -38,8 +38,6 @@ class _SelectDocState extends State<SelectDoc> {
   Widget Select_doc_type(String name, String image) {
     return InkWell(
       onTap: () {
-        Provider.of<SelectCatProvider>(context, listen: false)
-            .toggleSelect(name);
         Navigator.push(
             context,
             MaterialPageRoute(

@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 
 class SelectCatProvider extends ChangeNotifier {
   String category = '';
-  void toggleSelect(String cat) {
+  String categoryId = '';
+  String userId='1';
+  void toggleSelect(String cat,String id) {
     category = cat;
+    categoryId=id;
     notifyListeners();
   }
 }

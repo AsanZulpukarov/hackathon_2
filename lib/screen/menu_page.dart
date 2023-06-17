@@ -3,6 +3,7 @@ import 'package:kodeks/screen/doc/do_doc.dart';
 import 'package:kodeks/screen/instruction/topic_category_screen.dart';
 import 'package:kodeks/screen/profile_screen/user_profile_screen.dart';
 import 'package:kodeks/screen/questions.dart';
+import 'package:kodeks/screen/questions/questionsPage.dart';
 
 import '../colors.dart';
 import 'doc/select_document/select_doc.dart';
@@ -26,6 +27,7 @@ class _MenuPageState extends State<MenuPage> {
       ChatScreenGPT(),
       SelectDoc(),
       TopicCategoryScreen(),
+      QuestionsPage(),
       UserProfileScreen()
     ];
   }
@@ -85,6 +87,14 @@ class _MenuPageState extends State<MenuPage> {
                       Icons.menu,
                     ),
                     label: 'Категории'),
+                BottomNavigationBarItem(
+
+                    // icon: Icon(
+                    // Icons.play_arrow_outlined,
+                    icon: Icon(
+                      Icons.question_mark,
+                    ),
+                    label: 'Вопросы'),
                 BottomNavigationBarItem(
                     icon: Icon(
                       Icons.account_box,

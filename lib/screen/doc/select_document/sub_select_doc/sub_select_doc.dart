@@ -38,8 +38,6 @@ class _SubSelectDocState extends State<SubSelectDoc> {
   Widget Select_doc_type(String name, String image) {
     return InkWell(
       onTap: () {
-        Provider.of<SelectCatProvider>(context, listen: false)
-            .toggleSelect(name);
         Navigator.push(
             context,
             MaterialPageRoute(

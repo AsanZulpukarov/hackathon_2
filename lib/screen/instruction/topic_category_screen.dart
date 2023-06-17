@@ -18,6 +18,7 @@ class _TopicCategoryScreenState extends State<TopicCategoryScreen> {
     super.initState();
     categoryFuture = fetchCategory();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,43 +27,44 @@ class _TopicCategoryScreenState extends State<TopicCategoryScreen> {
       ),
       body: FutureBuilder(
         future: categoryFuture,
-        builder: (context,snapshot){
-          if(snapshot.hasData) {
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
             return ListView.builder(
               itemCount: snapshot.data!.data!.length,
-              itemBuilder: (context, int index) {return Container(
-                margin: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).primaryColor,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.all(12.0),
-                child: InkWell(
-                  child: Container(
-
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                        snapshot.data!.data!.elementAt(index).name ?? "",style: TextStyle(fontSize: 20),
+              itemBuilder: (context, int index) {
+                return Container(
+                  margin: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
+                      width: 2,
                     ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, "/category/instructions",arguments:  [snapshot.data!.data!.elementAt(index).id,snapshot.data!.data!.elementAt(index).name]);
-                  },
-                ),
-              );
+                  padding: const EdgeInsets.all(12.0),
+                  child: InkWell(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        snapshot.data!.data!.elementAt(index).name ?? "",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/category/instructions",
+                          arguments: [
+                            snapshot.data!.data!.elementAt(index).id,
+                            snapshot.data!.data!.elementAt(index).name
+                          ]);
+                    },
+                  ),
+                );
               },
-            );;
-          }
-          else if(snapshot.hasError){
-            return Center(child: Text(
-              "hasError"
-            ));
-          }
-          else {
+            );
+            ;
+          } else if (snapshot.hasError) {
+            return Center(child: Text("hasError"));
+          } else {
             return Center(child: CircularProgressIndicator());
           }
         },
