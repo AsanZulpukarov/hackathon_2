@@ -49,7 +49,12 @@ class _InstructionsMessageState extends State<InstructionsMessage> {
                     widget.text,
                     style: TextStyle(
                         fontSize: 16.0,
-                        color: widget.isUser ? Colors.white : kDarkCardC),
+                        decoration: TextDecoration.underline,
+                        color: widget.text == 'Актуальные вопросы:'
+                            ? kDarkCardC
+                            : widget.text == 'Инструкции:'
+                                ? kDarkCardC
+                                : Colors.blue),
                   ),
                 ),
               ],
