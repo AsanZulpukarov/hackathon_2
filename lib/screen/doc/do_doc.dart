@@ -13,8 +13,7 @@ import 'package:intl/intl.dart';
 class Doc extends StatefulWidget {
   final nameDoc;
 
-
-   Doc({Key? key, required this.nameDoc}) : super(key: key);
+  Doc({Key? key, required this.nameDoc}) : super(key: key);
   @override
   State<Doc> createState() => _DocState(nameDoc);
 }
@@ -48,6 +47,10 @@ class _DocState extends State<Doc> {
     final fontData = await rootBundle.load('assets/DejaVuSans.ttf');
     print(fontData.lengthInBytes);
     final font = pw.Font.ttf(fontData);
+
+    final imageData =
+        (await rootBundle.load('assets/signature.png')).buffer.asUint8List();
+
     final titleStyle = pw.TextStyle(
       fontWeight: pw.FontWeight.bold,
       fontSize: 20,
@@ -74,7 +77,7 @@ class _DocState extends State<Doc> {
                 ),
                 pw.SizedBox(height: 20),
                 pw.Text(
-                  'Я, ${name.text}, прошу Вас, ${directorName.text}, расторгнуть мои трудовые отношения из позиции ${position.text} с ${companyName.text} с момента подачи данного заявления.',
+                  'Я, ${name.text}, прошу Вас, ${directorName.text}, расторгнуть мои трудовые отношения на позиции ${position.text} с ${companyName.text} с момента подачи данного заявления.',
                   style: contentStyle,
                 ),
                 pw.SizedBox(height: 20),
@@ -83,10 +86,20 @@ class _DocState extends State<Doc> {
                   style: contentStyle,
                 ),
                 pw.SizedBox(height: 20),
-                pw.Text(
-                  'Подпись: ___________________',
-                  style: contentStyle,
-                ),
+                pw.Row(
+                  children: [
+                    pw.Text(
+                      'Подпись:   ',
+                      style: contentStyle,
+                    ),
+                    pw.Image(
+                      pw.MemoryImage(imageData),
+                      height: 80,
+                      width: 80,
+                    ),
+                  ],
+                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                )
               ],
             ),
           );
@@ -103,6 +116,8 @@ class _DocState extends State<Doc> {
     final fontData = await rootBundle.load('assets/DejaVuSans.ttf');
     print(fontData.lengthInBytes);
     final font = pw.Font.ttf(fontData);
+    final imageData =
+        (await rootBundle.load('assets/signature.png')).buffer.asUint8List();
     final titleStyle = pw.TextStyle(
       fontWeight: pw.FontWeight.bold,
       fontSize: 20,
@@ -138,10 +153,20 @@ class _DocState extends State<Doc> {
                   style: contentStyle,
                 ),
                 pw.SizedBox(height: 20),
-                pw.Text(
-                  'Подпись: ___________________',
-                  style: contentStyle,
-                ),
+                pw.Row(
+                  children: [
+                    pw.Text(
+                      'Подпись:   ',
+                      style: contentStyle,
+                    ),
+                    pw.Image(
+                      pw.MemoryImage(imageData),
+                      height: 80,
+                      width: 80,
+                    ),
+                  ],
+                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                )
               ],
             ),
           );
@@ -153,7 +178,6 @@ class _DocState extends State<Doc> {
     final file = File('${output.path}/заявление_об_увольнении.pdf');
     await file.writeAsBytes(await pdf.save());
   }
-
 
   @override
   Widget build(BuildContext context) {

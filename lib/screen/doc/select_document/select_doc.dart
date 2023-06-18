@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodeks/colors.dart';
 import 'package:kodeks/screen/doc/select_document/sub_select_doc/sub_select_doc.dart';
-import 'package:provider/provider.dart';
 
 import '../do_doc.dart';
 import 'select_doc_provider.dart';
@@ -15,8 +14,11 @@ class SelectDoc extends StatefulWidget {
 
 class _SelectDocState extends State<SelectDoc> {
   List<String> CategoryName = [
-    'Общее',
-    'Заявление',
+    'Работа',
+    'Акты',
+    'Милиция',
+    'Университет',
+    'Школа',
   ];
 
   @override
@@ -38,11 +40,13 @@ class _SelectDocState extends State<SelectDoc> {
   Widget Select_doc_type(String name, String image) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SubSelectDoc(nameDoc: name),
-            ));
+        if (name == 'Работа') {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SubSelectDoc(nameDoc: name),
+              ));
+        }
       },
       child: Ink(
         width: 65,
