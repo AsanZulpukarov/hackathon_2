@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Center(
                         child: Image.asset(
-                          'assets/logo.png',
+                          'assets/profile.png',
                           width: 150,
                           height: 150,
                         ),
@@ -130,21 +130,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                       btnText: 'Войти',
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          String? answer = await ApiService().postSingIn(
-                                              innController.text,
-                                              passwordController.text);
-                                          if(answer.isNotEmpty){
-                                            SharedPreferences prefs = await SharedPreferences.getInstance();
-                                            Map<String, dynamic> userData = jsonDecode(answer);
+                                          String? answer = await ApiService()
+                                              .postSingIn(innController.text,
+                                                  passwordController.text);
+                                          if (answer.isNotEmpty) {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            Map<String, dynamic> userData =
+                                                jsonDecode(answer);
 
-                                            prefs.setString("roleKey", userData["role"]);
-                                            prefs.setInt("idKey", userData["id"]);
-                                            prefs.setString("nameKey", userData["name"]);
+                                            prefs.setString(
+                                                "roleKey", userData["role"]);
+                                            prefs.setInt(
+                                                "idKey", userData["id"]);
+                                            prefs.setString(
+                                                "nameKey", userData["name"]);
                                             Navigator.pushAndRemoveUntil(
-                                                context, MaterialPageRoute(builder: (context) =>
-                                                MenuPage(userData["role"])),(Route<dynamic> route) => false);
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MenuPage(
+                                                            userData["role"])),
+                                                (Route<dynamic> route) =>
+                                                    false);
                                           }
-
                                         }
                                       },
                                     ),
@@ -205,5 +215,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }

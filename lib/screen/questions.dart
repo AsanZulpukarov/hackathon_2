@@ -6,6 +6,7 @@ import 'package:kodeks/fetches/fetchGPT.dart';
 import 'package:kodeks/model/GPTModel.dart';
 import 'package:kodeks/screen/questions/openQuestion.dart';
 import 'package:kodeks/service/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/messageContainer.dart';
 import 'chat/chat_message.dart';
@@ -92,7 +93,9 @@ class _ChatScreenGPTState extends State<ChatScreenGPT> {
                                     j < path.popularQuestions!.length;
                                     j++)
                                   GestureDetector(
-                                    onTap: () {
+                                    onTap: () async {
+                                      SharedPreferences pref =
+                                          await SharedPreferences.getInstance();
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -100,7 +103,7 @@ class _ChatScreenGPTState extends State<ChatScreenGPT> {
                                                 OpenQuestionPage(
                                               id: path.popularQuestions![j].id
                                                   .toString(),
-                                              pref: null,
+                                              pref: pref,
                                             ),
                                           ));
                                     },

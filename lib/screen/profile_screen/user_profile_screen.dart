@@ -72,16 +72,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           SizedBox(
                             height: 16.h,
                           ),
-                          if(Provider.of<SelectCatProvider>(context, listen: false)
+                          if (Provider.of<SelectCatProvider>(context,
+                                  listen: false)
                               .buttonView)
-                          ElevatedButton(
-                            onPressed: () {
+                            ElevatedButton(
+                              onPressed: () {
                                 showModalBottomSheet(
-                                  context: context,
-                                  builder: ((builder) => bottomSheet(context)));
-                            },
-                            child: Text('Стать юристом'),
-                          ),
+                                    context: context,
+                                    builder: ((builder) =>
+                                        bottomSheet(context)));
+                                setState(() {});
+                              },
+                              child: Text('Стать юристом'),
+                            ),
                         ],
                       ),
                     ),
@@ -233,10 +236,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 child: imageFile.isNotEmpty
                     ? Image.file(File(imageFile[0].path))
                     : Placeholder(
-                  fallbackHeight: 100,
-                  fallbackWidth: 100,
-                  color: Colors.grey,
-                ),
+                        fallbackHeight: 100,
+                        fallbackWidth: 100,
+                        color: Colors.grey,
+                      ),
               ),
               Center(
                 child: ElevatedButton(
@@ -244,14 +247,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     'Отправить',
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
-                  onPressed: () async{
-                    SharedPreferences pref = await SharedPreferences.getInstance();
-                    bool ans=await ApiService().postCheckCertificate(imageFile[0], pref.getInt("idKey")!);
-                    if(ans) {
+                  onPressed: () async {
+                    SharedPreferences pref =
+                        await SharedPreferences.getInstance();
+                    bool ans = await ApiService().postCheckCertificate(
+                        imageFile[0], pref.getInt("idKey")!);
+                    if (ans) {
                       Provider.of<SelectCatProvider>(context, listen: false)
                           .buttonFalse();
                       pref.setString("role", "ROLE_LAWYER");
                     }
+                    Navigator.pop(context);
                   },
                 ),
               ),
@@ -279,5 +285,4 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       });
     }
   }
-
 }

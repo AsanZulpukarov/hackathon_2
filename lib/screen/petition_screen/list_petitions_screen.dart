@@ -31,7 +31,7 @@ class _ListPetitionState extends State<ListPetition> {
   void showAddPetitionDialog(BuildContext context) {
     TextEditingController titleController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
-
+    GlobalKey key;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -52,9 +52,13 @@ class _ListPetitionState extends State<ListPetition> {
                   labelText: 'Description',
                 ),
               ),
-              ElevatedButton(onPressed: (){showModalBottomSheet(
-                  context: context,
-                  builder: ((builder) => bottomSheet(context)));}, child: Text("Загрузить фото"))
+              ElevatedButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: ((builder) => bottomSheet(context)));
+                  },
+                  child: Text("Загрузить фото"))
             ],
           ),
           actions: [
@@ -65,9 +69,9 @@ class _ListPetitionState extends State<ListPetition> {
 
                 if (title.isNotEmpty && description.isNotEmpty) {
                   SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-                  ApiService().postAddPetition(imageFile[0], title, description,
-                      prefs.getInt("idKey")!);
+                      await SharedPreferences.getInstance();
+                  ApiService().postAddPetition(
+                      imageFile[0], title, description, prefs.getInt("idKey")!);
                 }
 
                 Navigator.pop(context);
@@ -93,37 +97,59 @@ class _ListPetitionState extends State<ListPetition> {
                   if (snapshot.hasData) {
                     return Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 10),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 30, horizontal: 10),
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.7, // Set a fixed height for the container
+                      height: MediaQuery.of(context).size.height *
+                          0.7, // Set a fixed height for the container
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         separatorBuilder: (context, _) => SizedBox(width: 5),
                         itemCount: snapshot.data!.data!.length,
                         itemBuilder: (context, index) => InkWell(
-                          onTap: (){
+                          onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SelectPetitionScreen(snapshot.data!.data![index].id!)),
+                              MaterialPageRoute(
+                                  builder: (context) => SelectPetitionScreen(
+                                      snapshot.data!.data![index].id!)),
                             );
                           },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width*0.7,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage("http://${ApiService.ip}:2323/storage/${snapshot.data?.data![index].photo ?? ""}"),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 450,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        "http://${ApiService.ip}:2323/storage/${snapshot.data?.data![index].photo ?? ""}"),
+                                  ),
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              children: [
-                                Text(snapshot.data!.data![index].title ?? "Пусто"),
-                                Text(snapshot.data!.data![index].description ??
-                                    "Пусто"),
-                              ],
-                            ),
+                              SizedBox(height: 20),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 40),
+                                color: Colors.grey[200],
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      snapshot.data!.data![index].title ??
+                                          "Пусто",
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                    Text(
+                                        snapshot.data!.data![index]
+                                                .description ??
+                                            "Пусто",
+                                        style: TextStyle(fontSize: 14)),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -143,6 +169,7 @@ class _ListPetitionState extends State<ListPetition> {
       ),
     );
   }
+
   Widget bottomSheet(BuildContext context) {
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setState) {
@@ -220,10 +247,10 @@ class _ListPetitionState extends State<ListPetition> {
                 child: imageFile.isNotEmpty
                     ? Image.file(File(imageFile[0].path))
                     : Placeholder(
-                  fallbackHeight: 100,
-                  fallbackWidth: 100,
-                  color: Colors.grey,
-                ),
+                        fallbackHeight: 100,
+                        fallbackWidth: 100,
+                        color: Colors.grey,
+                      ),
               ),
               Center(
                 child: ElevatedButton(
@@ -231,7 +258,8 @@ class _ListPetitionState extends State<ListPetition> {
                     'Сохранить',
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
-                  onPressed: () async{Navigator.pop(context);
+                  onPressed: () async {
+                    Navigator.pop(context);
                   },
                 ),
               ),
@@ -260,4 +288,3 @@ class _ListPetitionState extends State<ListPetition> {
     }
   }
 }
-
