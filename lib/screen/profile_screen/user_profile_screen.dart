@@ -48,7 +48,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           future: futureUserEntity,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(snapshot.data?.data?.name);
               return Container(
                 padding: EdgeInsets.all(16.w),
                 child: Column(

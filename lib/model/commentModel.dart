@@ -24,36 +24,44 @@ class CommentModel {
 class Data {
   int? id;
   int? userId;
-  int? questionId;
+  String? name;
+  String? phoneNumber;
   String? comment;
+  int? questionId;
   String? createdAt;
   String? updatedAt;
 
   Data(
       {this.id,
-      this.userId,
-      this.questionId,
-      this.comment,
-      this.createdAt,
-      this.updatedAt});
+        this.userId,
+        this.name,
+        this.phoneNumber,
+        this.comment,
+        this.questionId,
+        this.createdAt,
+        this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    questionId = json['question_id'];
+    name = json['name'];
+    phoneNumber = json['phone_number'];
     comment = json['comment'];
+    questionId = json['question_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['question_id'] = this.questionId;
-    data['comment'] = this.comment;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['name'] = name;
+    data['phone_number'] = phoneNumber;
+    data['comment'] = comment;
+    data['question_id'] = questionId;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

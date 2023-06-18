@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 class ApiService {
   var client = http.Client();
 
-  var ip = '192.168.43.33';
+  static const ip = '192.168.43.33';
   var port = 2323;
 
   Future<String> postSingUp(var json) async {
@@ -394,6 +394,123 @@ class ApiService {
       print('error not found');
       print(response.body);
       return '';
+    }
+  }
+
+  Future<bool> postNewComment(String questionId,int userId,String comment) async {
+    Map<String, dynamic> json = {
+      "question_id":int.parse(questionId),
+      "user_id":userId,
+      "comment" : comment
+    };
+
+    var uri = Uri(
+      scheme: 'http',
+      host: ip,
+      port: port,
+      path: 'api/question/comment/create',
+    );
+    print(uri);
+    var response = await client.post(uri,
+        body: jsonEncode(json),
+        headers: {"Content-Type": "application/json", "Accept": "*/*"});
+    print(response.statusCode);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print(response.statusCode);
+      print(response.body);
+      return true;
+    } else {
+      print('error not found');
+      print(response.body);
+      return false;
+    }
+  }
+
+  Future<dynamic> getPetitionsAll() async {
+    var uri = Uri(
+      scheme: 'http',
+      host: ip,
+      port: port,
+      path: 'api/petition/get/all/petitions',
+    );
+    print(uri);
+    var response = await client.get(uri,
+        headers: {"Content-Type": "application/json", "Accept": "*/*"});
+    print(response.statusCode);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print(response.statusCode);
+      print(response.body);
+      return response.body;
+    } else {
+      print('error not found');
+      print(response.body);
+      return '';
+    }
+  }
+  Future<dynamic> getPetitionById(int id) async {
+    var uri = Uri(
+      scheme: 'http',
+      host: ip,
+      port: port,
+      path: 'api/petition/get/$id',
+    );
+    print(uri);
+    var response = await client.get(uri,
+        headers: {"Content-Type": "application/json", "Accept": "*/*"});
+    print(response.statusCode);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print(response.statusCode);
+      print(response.body);
+      return response.body;
+    } else {
+      print('error not found');
+      print(response.body);
+      return '';
+    }
+  }
+
+  Future<bool> postAddPetition(XFile file,String title, String description, int id) async {
+    var uri = Uri(
+      scheme: 'http',
+      host: ip,
+      port: port,
+      path: 'api/petition/create',
+    );
+
+    final Map<String, String> requestBody = {
+      'title': title,
+      'description': description,
+      'user_id': id.toString()
+    };
+    print(uri);
+    var request = http.MultipartRequest('POST', uri);
+
+//for image and videos and files
+
+// request.files.add(await http.MultipartFile.fromPath("images", path));
+    final fileBytes = await file.readAsBytes();
+    final httpImage = http.MultipartFile.fromBytes(
+        'photo', fileBytes.toList(),
+        contentType: MediaType('image', 'jpeg'), filename: file.name);
+//for completeing the request
+    request.files.add(httpImage);
+
+    request.fields.addAll(requestBody);
+    var response = await request.send();
+
+//for getting and decoding the response into json format
+    var responsed = await http.Response.fromStream(response);
+// final responseData = json.decode();
+
+    if (response.statusCode == 200) {
+      print("SUCCESS photoprofile add");
+      print(responsed.body);
+      return true;
+    } else {
+      print(response.statusCode);
+      print(responsed.body);
+      print("ERROR photo profile");
+      return false;
     }
   }
 }

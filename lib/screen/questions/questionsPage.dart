@@ -5,6 +5,7 @@ import 'package:kodeks/model/questions_model.dart';
 import 'package:kodeks/screen/questions/openQuestion.dart';
 import 'package:kodeks/service/api_service.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../fetches/category_fetche.dart';
 import '../../model/category_model.dart';
@@ -39,8 +40,8 @@ class _QuestionsPageState extends State<QuestionsPage> {
             return Stack(
               children: [
                 ListView.builder(
-                  padding: EdgeInsets.all(20),
-                  itemCount: snapshot.data!.data!.length!,
+                  padding: EdgeInsets.all(12),
+                  itemCount: snapshot.data!.data!.length,
                   itemBuilder: (context, int index) {
                     return Container(
                       margin: const EdgeInsets.all(12),
@@ -88,12 +89,13 @@ class _QuestionsPageState extends State<QuestionsPage> {
                             ],
                           ),
                         ),
-                        onTap: () {
+                        onTap: () async{
+                          SharedPreferences pref = await SharedPreferences.getInstance();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => OpenQuestionPage(
-                                    id: path[index].id.toString()),
+                                    id: path[index].id.toString(),pref: pref,),
                               ));
                         },
                       ),

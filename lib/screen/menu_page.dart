@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodeks/screen/instruction/topic_category_screen.dart';
+import 'package:kodeks/screen/petition_screen/list_petitions_screen.dart';
 import 'package:kodeks/screen/profile_screen/lawyer_profile_screen.dart';
 import 'package:kodeks/screen/profile_screen/user_profile_screen.dart';
 import 'package:kodeks/screen/questions.dart';
@@ -30,6 +31,7 @@ class _MenuPageState extends State<MenuPage> {
       SelectDoc(),
       TopicCategoryScreen(),
       QuestionsPage(),
+      ListPetition(),
       widget.role == "ROLE_LAWYER"
           ? LawyerProfileScreen()
           : UserProfileScreen(),
@@ -99,6 +101,11 @@ class _MenuPageState extends State<MenuPage> {
                       Icons.question_mark,
                     ),
                     label: 'Вопросы'),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.record_voice_over_outlined,
+                    ),
+                    label: 'Петиции'),
                 BottomNavigationBarItem(
                     icon: Icon(
                       Icons.account_box,
