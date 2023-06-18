@@ -92,24 +92,27 @@ class ApiService {
   }
 
   Future<dynamic> postSendQuestion(String question) async {
-    Map<String, dynamic> jsonQues = {
-      "message": question,
+    var json = {
+      "query": question,
     };
 
     var uri = Uri(
       scheme: 'http',
-      host: '192.168.43.93',
-      port: 8080,
-      path: 'api/openAi',
+      host: ip,
+      port: port,
+      path: 'api/chat/query',
     );
-    var response = await client
-        .post(uri, body: jsonEncode(jsonQues), headers: <String, String>{
-      HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.acceptCharsetHeader: 'utf-8',
-    });
+    var response = await client.post(uri,
+        body: jsonEncode(json),
+        headers: {"Content-Type": "application/json", "Accept": "*/*"});
+    print(response.statusCode);
     if (response.statusCode == 201 || response.statusCode == 200) {
+      print(response.statusCode);
+      print(response.body);
       return response.body;
     } else {
+      print('error not found');
+      print(response.body);
       return '';
     }
   }

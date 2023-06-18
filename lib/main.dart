@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kodeks/screen/GPTProvider.dart';
 import 'package:kodeks/screen/auth/forgot_password_screen.dart';
 import 'package:kodeks/screen/auth/login_screen.dart';
 import 'package:kodeks/screen/auth/signup_screen.dart';
@@ -13,9 +14,7 @@ import 'package:kodeks/themes.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MyApp(prefs));
@@ -23,7 +22,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   SharedPreferences _preferences;
-  MyApp(this._preferences){}
+  MyApp(this._preferences) {}
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -32,6 +31,7 @@ class MyApp extends StatelessWidget {
           return MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (_) => SelectCatProvider()),
+              ChangeNotifierProvider(create: (_) => GPTProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -53,7 +53,8 @@ class MyApp extends StatelessWidget {
                   return InstructionScreen(
                       ModalRoute.of(context)!.settings.arguments as int);
                 },
-                '/splash_screen': (context) => SplashScreen(prefs: _preferences),
+                '/splash_screen': (context) =>
+                    SplashScreen(prefs: _preferences),
               },
             ),
           );

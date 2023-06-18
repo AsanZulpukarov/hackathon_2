@@ -60,7 +60,7 @@ class _SelectTopicCategoryScreenState extends State<SelectTopicCategoryScreen> {
                           SizedBox(
                             height: 5.h,
                           ),
-                          Text(
+                          /*Text(
                             snapshot.data!.data!.elementAt(index).instruction ??
                                 "",
                             maxLines: 1,
@@ -68,7 +68,7 @@ class _SelectTopicCategoryScreenState extends State<SelectTopicCategoryScreen> {
                                 fontSize: 14,
                                 fontStyle: FontStyle.italic,
                                 overflow: TextOverflow.ellipsis),
-                          ),
+                          ),*/
                           SizedBox(
                             height: 5.h,
                           ),
