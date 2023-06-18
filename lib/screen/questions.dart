@@ -98,9 +98,10 @@ class _ChatScreenGPTState extends State<ChatScreenGPT> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 OpenQuestionPage(
-                                                    id: path
-                                                        .popularQuestions![j].id
-                                                        .toString()),
+                                              id: path.popularQuestions![j].id
+                                                  .toString(),
+                                              pref: null,
+                                            ),
                                           ));
                                     },
                                     child: InstructionsMessage(
