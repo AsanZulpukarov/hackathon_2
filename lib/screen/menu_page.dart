@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodeks/screen/instruction/topic_category_screen.dart';
+import 'package:kodeks/screen/petition_screen/list_petitions_screen.dart';
 import 'package:kodeks/screen/profile_screen/lawyer_profile_screen.dart';
 import 'package:kodeks/screen/profile_screen/user_profile_screen.dart';
 import 'package:kodeks/screen/questions.dart';
@@ -28,7 +29,7 @@ class _MenuPageState extends State<MenuPage> {
     screens = [
       ChatScreenGPT(),
       SelectDoc(),
-      TopicCategoryScreen(),
+      ListPetition(),
       QuestionsPage(),
       widget.role == "ROLE_LAWYER"
           ? LawyerProfileScreen()

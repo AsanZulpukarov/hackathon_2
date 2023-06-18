@@ -40,7 +40,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
             return Stack(
               children: [
                 ListView.builder(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(12),
                   itemCount: snapshot.data!.data!.length,
                   itemBuilder: (context, int index) {
                     return Container(

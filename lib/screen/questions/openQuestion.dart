@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kodeks/colors.dart';
 import 'package:kodeks/fetches/fetchComment.dart';
 import 'package:kodeks/fetches/fetchOpenQuestion.dart';
 import 'package:kodeks/model/commentModel.dart';
@@ -70,93 +71,107 @@ class _OpenQuestionPageState extends State<OpenQuestionPage> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              FutureBuilder<OpenQuestionModel>(
-                future: fetchOpenQuestion(widget.id),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasData) {
-                    var path = snapshot.data!.data!;
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          path.title!,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          path.question!,
-                          style: TextStyle(color: Colors.black, fontSize: 20),
-                        ),
-                        SizedBox(height: 60),
-                      ],
-                    );
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
-              ),
-              FutureBuilder<LikesQuestionModel>(
-                future: fetchLikesQuestion(
-                  widget.id,
-                  Provider.of<SelectCatProvider>(context, listen: false)
-                      .userId,
-                ),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasData) {
-                    var path = snapshot.data!.data!;
-                    return Container(
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () async {
-                              if (!path.isLiked!)
-                                await ApiService().postLikeQuestion(
-                                  questionId: widget.id,
-                                  userId: Provider.of<SelectCatProvider>(
-                                    context,
-                                    listen: false,
-                                  ).userId,
-                                );
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
 
-                              if (path.isLiked!)
-                                await ApiService().deleteLikesQuestion(
-                                  widget.id,
-                                  Provider.of<SelectCatProvider>(context,
-                                    listen: false,
-                                  ).userId,
-                                );
-                              setState(() {});
-                            },
-                            icon: Icon(
-                              Icons.thumb_up,
-                              color: path.isLiked! ? Colors.red : Colors.grey,
-                            ),
-                          ),
-                          Text(
-                            path.count.toString(),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
+                  Expanded(
+                    flex: 4,
+                    child: FutureBuilder<OpenQuestionModel>(
+                      future: fetchOpenQuestion(widget.id),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        if (snapshot.hasData) {
+                          var path = snapshot.data!.data!;
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                path.title!,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                path.question!,
+                                style: TextStyle(color: Colors.black, fontSize: 20),
+                              ),
+                              SizedBox(height: 60),
+                            ],
+                          );
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: FutureBuilder<LikesQuestionModel>(
+                      future: fetchLikesQuestion(
+                        widget.id,
+                        Provider.of<SelectCatProvider>(context, listen: false)
+                            .userId,
                       ),
-                    );
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        if (snapshot.hasData) {
+                          var path = snapshot.data!.data!;
+                          return Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () async {
+                                    if (!path.isLiked!)
+                                      await ApiService().postLikeQuestion(
+                                        questionId: widget.id,
+                                        userId: Provider.of<SelectCatProvider>(
+                                          context,
+                                          listen: false,
+                                        ).userId,
+                                      );
+
+                                    if (path.isLiked!)
+                                      await ApiService().deleteLikesQuestion(
+                                        widget.id,
+                                        Provider.of<SelectCatProvider>(context,
+                                          listen: false,
+                                        ).userId,
+                                      );
+                                    setState(() {});
+                                  },
+                                  icon: Icon(
+                                    Icons.thumb_up,
+                                    color: path.isLiked! ? Colors.red : Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  path.count.toString(),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                    ),
+                  ),
+                ],
               ),
               widget.pref.getString("roleKey") == "ROLE_LAWYER" ? getCommentAndButton() : Container(),
               SizedBox(height: 20),
@@ -185,9 +200,43 @@ class _OpenQuestionPageState extends State<OpenQuestionPage> {
                         return ListView(
                           children: [
                             for (var i = 0; i < path.length; i++)
-                              ChatMessage(
-                                text: path[i].comment!,
-                                isUser: false,
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(child: Text("ФИО: ${path[i].name!}",style: TextStyle(color: kGreenDarkC,fontSize: 10),)),
+                                        Expanded(child: Text("тел: ${path[i].phoneNumber!}",style: TextStyle(color: kGreenDarkC,fontSize: 10),)),
+                                      ],
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 5.0),
+                                      padding:
+                                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        border: Border.all(
+                                          color: Colors.black45
+                                        )
+                                      ),
+                                      child: Text(
+                                        path[i].comment!,
+                                        style: TextStyle(fontSize: 16.0,color: Colors.black54),
+                                      ),
+                                    ),
+                                    SizedBox(height: 5.h,),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Icon(Icons.calendar_month,color: kGreenDarkC,size: 15,),
+                                        Text(path[i].updatedAt ?? path[i].createdAt!,style: TextStyle(color: kGreenDarkC,fontSize: 10),),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                           ],
                         );
