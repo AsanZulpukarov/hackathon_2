@@ -29,8 +29,9 @@ class _MenuPageState extends State<MenuPage> {
     screens = [
       ChatScreenGPT(),
       SelectDoc(),
-      ListPetition(),
+      TopicCategoryScreen(),
       QuestionsPage(),
+      ListPetition(),
       widget.role == "ROLE_LAWYER"
           ? LawyerProfileScreen()
           : UserProfileScreen(),
@@ -100,6 +101,11 @@ class _MenuPageState extends State<MenuPage> {
                       Icons.question_mark,
                     ),
                     label: 'Вопросы'),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.record_voice_over_outlined,
+                    ),
+                    label: 'Петиции'),
                 BottomNavigationBarItem(
                     icon: Icon(
                       Icons.account_box,
